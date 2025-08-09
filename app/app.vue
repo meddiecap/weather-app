@@ -16,7 +16,7 @@
       <section class="rounded-[var(--radius-2xl)] p-4 shadow-[var(--shadow-elevation-1)] bg-surface dark:bg-slate-900">
         <h2 class="text-xl mb-2">Precipitation</h2>
         <div class="h-2 rounded-full bg-precip-rain/20">
-          <div class="h-2 w-1/2 rounded-full bg-precip-rain"></div>
+          <div class="h-2 w-1/2 rounded-full bg-precip-rain" />
         </div>
       </section>
 
