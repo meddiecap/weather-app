@@ -1,75 +1,27 @@
-# Nuxt Minimal Starter
+# Weather App
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[![CI](https://github.com/meddiecap/weather-app/actions/workflows/ci.yml/badge.svg)](https://github.com/meddiecap/weather-app/actions/workflows/ci.yml)
 
-## Setup
+A modern weather application built with **Nuxt 4**, **Tailwind CSS 4**, and **Pinia**.
+The app will display weather data in a clean, responsive interface.
 
-Make sure to install dependencies:
+## 🚀 Features
+- Nuxt 4 with TypeScript support
+- Tailwind CSS 4 for styling
+- Pinia state management
+- GitHub Actions CI (lint, typecheck, test, build)
 
+## 🛠 Tech Stack
+- [Nuxt 4](https://nuxt.com/)
+- [Vue 3](https://vuejs.org/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [Pinia](https://pinia.vuejs.org/)
+- [Vitest](https://vitest.dev/) for testing
+- [ESLint](https://eslint.org/) + [TypeScript](https://www.typescriptlang.org/)
+
+## 📦 Project Setup
+
+Clone the repository:
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+git clone https://github.com/meddiecap/weather-app.git
+cd weather-app
