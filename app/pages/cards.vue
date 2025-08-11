@@ -11,7 +11,7 @@
       <figure>
         <img
             src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            alt="Shoes" />
+            alt="Shoes">
       </figure>
       <div class="card-body">
         <h2 class="card-title">Card Title</h2>
@@ -27,7 +27,7 @@
       <h2 class="text-lg font-medium mb-3">Basic</h2>
       <div class="card w-96 bg-base-100 shadow-xl">
         <figure>
-          <img src="https://picsum.photos/400/200" alt="Random image" />
+          <img src="https://picsum.photos/400/200" alt="Random image">
         </figure>
         <div class="card-body">
           <h2 class="card-title">Basic Card</h2>
@@ -45,7 +45,7 @@
       <h2 class="text-lg font-medium mb-3">Image top</h2>
       <div class="card w-96 bg-base-100 shadow-lg">
         <figure>
-          <img src="https://picsum.photos/400/180" alt="Image top" />
+          <img src="https://picsum.photos/400/180" alt="Image top">
         </figure>
         <div class="card-body">
           <h2 class="card-title">Card Title</h2>
@@ -78,7 +78,7 @@
       <h2 class="text-lg font-medium mb-3">Horizontal</h2>
       <div class="card card-side bg-base-100 shadow-xl w-full max-w-3xl">
         <figure>
-          <img src="https://picsum.photos/200/200" alt="Side image" />
+          <img src="https://picsum.photos/200/200" alt="Side image">
         </figure>
         <div class="card-body">
           <h2 class="card-title">Horizontal Card</h2>
@@ -97,7 +97,7 @@
       <h2 class="text-lg font-medium mb-3">Glass effect</h2>
       <div class="card w-96 glass">
         <figure>
-          <img src="https://picsum.photos/400/200" alt="Glass card" />
+          <img src="https://picsum.photos/400/200" alt="Glass card">
         </figure>
         <div class="card-body">
           <h2 class="card-title">Glass Card</h2>

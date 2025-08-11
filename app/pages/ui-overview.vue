@@ -43,13 +43,13 @@ const sections = [
             <button class="btn btn-ghost">Ghost</button>
             <button class="btn btn-primary btn-sm">Small</button>
             <button class="btn btn-primary" aria-busy="true">
-              <span class="loading loading-spinner" aria-hidden="true"></span>
+              <span class="loading loading-spinner" aria-hidden="true" />
               Loading
             </button>
           </div>
 
           <div class="card-actions justify-end mt-6">
-            <NuxtLink to="/ui-buttons" class="btn btn-primary">See all</NuxtLink>
+            <NuxtLink to="/buttons" class="btn btn-primary">See all</NuxtLink>
           </div>
         </div>
       </article>
@@ -101,7 +101,7 @@ const sections = [
             <!-- Mini horizontal card -->
             <div class="card card-side bg-base-100 ring-1 ring-base-300">
               <figure class="w-24 shrink-0">
-                <img src="https://picsum.photos/96/96" alt="thumb" />
+                <img src="https://picsum.photos/96/96" alt="thumb">
               </figure>
               <div class="card-body p-4">
                 <h3 class="font-medium">Horizontal</h3>

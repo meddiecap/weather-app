@@ -64,18 +64,14 @@
         <button class="btn btn-primary">Rounded (theme radius)</button>
         <button class="btn btn-circle btn-primary" aria-label="Circle button">
           <!-- Icon-only circle -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-               fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 4v16m8-8H4"/>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
           </svg>
         </button>
         <button class="btn btn-square btn-secondary" aria-label="Square button">
           <!-- Icon-only square -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-               fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M5 13l4 4L19 7"/>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
           </svg>
         </button>
       </div>
@@ -86,20 +82,16 @@
       <h2 class="text-lg font-medium mb-3">With icons</h2>
       <div class="flex flex-wrap gap-3">
         <button class="btn btn-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-               fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M12 4v16m8-8H4"/>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
           </svg>
           Add
         </button>
 
         <button class="btn btn-secondary">
           Download
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
-               fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4"/>
           </svg>
         </button>
       </div>
@@ -110,11 +102,11 @@
       <h2 class="text-lg font-medium mb-3">Loading state</h2>
       <div class="flex flex-wrap items-center gap-3">
         <button class="btn btn-primary" aria-busy="true" aria-live="polite">
-          <span class="loading loading-spinner" aria-hidden="true"></span>
+          <span class="loading loading-spinner" aria-hidden="true" />
           Saving…
         </button>
         <button class="btn btn-outline btn-secondary" aria-busy="true">
-          <span class="loading loading-dots" aria-hidden="true"></span>
+          <span class="loading loading-dots" aria-hidden="true" />
           Loading
         </button>
       </div>

@@ -80,15 +80,15 @@
       <div class="flex flex-wrap items-center gap-6">
         <!-- Simple dot + label -->
         <div class="flex items-center gap-2">
-          <span class="badge badge-xs badge-success"></span>
+          <span class="badge badge-xs badge-success"/>
           <span class="text-sm">Online</span>
         </div>
         <div class="flex items-center gap-2">
-          <span class="badge badge-xs badge-warning"></span>
+          <span class="badge badge-xs badge-warning"/>
           <span class="text-sm">Degraded</span>
         </div>
         <div class="flex items-center gap-2">
-          <span class="badge badge-xs badge-error"></span>
+          <span class="badge badge-xs badge-error"/>
           <span class="text-sm">Offline</span>
         </div>
 
