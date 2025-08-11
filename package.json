@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^2.4.6",
+    "daisyui": "^5.0.50",
     "happy-dom": "^18.0.1",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4",
@@ -33,6 +34,8 @@
   "vitest": {
     "environment": "happy-dom",
     "globals": true,
-    "include": ["**/*.spec.{js,ts}"]
+    "include": [
+      "**/*.spec.{js,ts}"
+    ]
   }
 }
