@@ -15,5 +15,11 @@ export default defineNuxtConfig({
 
   typescript: {
     strict: true
+  },
+
+  runtimeConfig: {
+    public: {
+      cacheTtl: 300 // Cache TTL in seconds (default: 5 minutes)
+    }
   }
 })
