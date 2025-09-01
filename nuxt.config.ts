@@ -2,7 +2,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
 
   vite: {
@@ -11,15 +11,20 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: ['@nuxt/eslint', '@pinia/nuxt'],
+  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module'],
 
   typescript: {
     strict: true
   },
 
   runtimeConfig: {
+    cacheTtl: {
+      search: 30,       // default 30s
+      forecast: 600,    // default 10m
+    },
     public: {
-      cacheTtl: 300 // Cache TTL in seconds (default: 5 minutes)
+      // optionally expose for client hints, but server uses private config above
+      cacheTtl: 600
     }
   }
 })
