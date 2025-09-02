@@ -27,5 +27,7 @@ export default defineCachedEventHandler(async (event) => {
             language: q.language ? String(q.language) : undefined,
             count: q.count ? Number(q.count) : undefined,
         })
-    }
+    },
+    staleMaxAge: 60,
+    swr: true
 })

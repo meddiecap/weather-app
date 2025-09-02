@@ -30,5 +30,7 @@ export default defineCachedEventHandler(async (event) => {
             model: q.model ? String(q.model) : undefined,
             timezone: q.timezone ? String(q.timezone) : undefined,
         })
-    }
+    },
+    staleMaxAge: 60,
+    swr: true
 })
