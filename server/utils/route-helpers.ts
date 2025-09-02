@@ -25,7 +25,7 @@ export function makeSearchKey(q: { name: string; language?: string; count?: numb
 }
 
 
-export function makeForecastKey(q: { lat: number; lon: number; hourly?: string; daily?: string; model?: string; timezone?: string }) {
+export function makeForecastKey(q: { lat?: string; lon?: string; hourly?: string; daily?: string; model?: string; timezone?: string }) {
     const parts = [
         `lat=${q.lat}`, `lon=${q.lon}`,
         q.hourly ? `hourly=${q.hourly}` : '',

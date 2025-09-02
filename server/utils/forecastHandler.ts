@@ -1,7 +1,6 @@
 import type { H3Event } from 'h3'
 import { getQuery } from 'h3';
 import { assertCoords } from '../utils/route-helpers'
-import { ofetch } from 'ofetch';
 
 export async function forecastHandler(event: H3Event) {
     const q = getQuery(event)
@@ -13,7 +12,7 @@ export async function forecastHandler(event: H3Event) {
 
 
     const url = 'https://api.open-meteo.com/v1/forecast'
-    const data = await ofetch(url, {
+    const data = await $fetch(url, {
         query: { latitude: lat, longitude: lon, hourly, daily, timezone }
     })
     return data

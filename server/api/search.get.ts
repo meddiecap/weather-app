@@ -5,7 +5,17 @@ import { geocodeHandler } from '../utils/geocodeHandler';
 // ✅ Explicitly import Nuxt auto-imports so Vitest can mock them via `#imports`
 import { defineCachedEventHandler, getQuery, useRuntimeConfig } from '#imports'
 
-export default defineCachedEventHandler(geocodeHandler, {
+export default defineCachedEventHandler(async (event) => {
+    try {
+        return await geocodeHandler(event)
+    } catch (err: any) {
+        if (err instanceof Error) {
+            // Parameter validation error
+            return createError({ statusCode: 400, statusMessage: err.message })
+        }
+        throw err
+    }
+}, {
     maxAge: (() => {
         const cfg = useRuntimeConfig()
         return Number(cfg.cacheTtl?.search ?? 30) // seconds

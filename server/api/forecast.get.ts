@@ -5,16 +5,26 @@ import { forecastHandler } from '../utils/forecastHandler';
 // ✅ Explicitly import Nuxt auto-imports so Vitest can mock them via `#imports`
 import { defineCachedEventHandler, getQuery, useRuntimeConfig } from '#imports'
 
-export default defineCachedEventHandler(forecastHandler, {
+export default defineCachedEventHandler(async (event) => {
+    try {
+        return await forecastHandler(event)
+    } catch (err: any) {
+        if (err instanceof Error ) {
+            // Parameter validation error
+            return createError({ statusCode: 400, statusMessage: err.message })
+        }
+        throw err
+    }
+}, {
     maxAge: (() => {
         const cfg = useRuntimeConfig()
         return Number(cfg.cacheTtl?.forecast ?? 600) // seconds
     })(),
     getKey: (event: H3Event) => {
         const q = getQuery(event)
-        const { lat, lon } = assertCoords(q.lat, q.lon)
         return makeForecastKey({
-            lat, lon,
+            lat: q.lat ? String(q.lat) : undefined,
+            lon: q.lon ? String(q.lon) : undefined,
             hourly: q.hourly ? String(q.hourly) : undefined,
             daily: q.daily ? String(q.daily) : undefined,
             model: q.model ? String(q.model) : undefined,
