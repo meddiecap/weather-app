@@ -10,7 +10,7 @@
       Skip to content
     </a>
 
-    <div class="min-h-dvh bg-grad-day text-base-content">
+    <div class="min-h-dvh bg-grad-day dark:bg-grad-night text-base-content">
       <!-- Header / Navbar -->
       <header class="sticky top-0 z-40 border-b border-base-300 bg-base-100/80 backdrop-blur">
         <div class="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
