@@ -8,11 +8,12 @@
       <section class="glass dark:glass-dark rounded-[var(--radius-2xl)] p-4 shadow-[var(--shadow-elevation-2)]">
         <location-search @select="onLocationSelect" />
 
-        <div v-if="selectedLocations.length" class="mt-4">
-          <h2 class="text-xl mb-2">Selected Locations</h2>
+        <div v-if="locations.length" class="mt-4">
+          <h2 class="text-xl mb-2">Popular Locations ({{ locations.length }})</h2>
           <ul>
-            <li v-for="location in selectedLocations" :key="location.name">
+            <li v-for="location in locations" :key="location.name + location.latitude + location.longitude">
               {{ location.name }} ({{ location.latitude }}, {{ location.longitude }})
+              <span class="ml-2 text-xs text-gray-500">x{{ location.count }}</span>
             </li>
           </ul>
         </div>
@@ -38,11 +39,13 @@
 </template>
 <script setup lang="ts">
 import LocationSearch from '~/components/LocationSearch.vue'
+import { useLocationsStore } from '../../stores/locations'
+import { storeToRefs } from 'pinia'
 
-const selectedLocations = ref<Array<{ name: string; latitude: number; longitude: number; country?: string }>>([])
+const locationsStore = useLocationsStore()
+const { locations } = storeToRefs(locationsStore)
 
 const onLocationSelect = (location: { name: string; latitude: number; longitude: number; country?: string }) => {
-  console.log('Selected location:', location)
-  selectedLocations.value.push(location)
+  locationsStore.addOrUpdate(location)
 }
 </script>
