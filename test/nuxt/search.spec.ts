@@ -2,7 +2,7 @@ import { setup, $fetch } from '@nuxt/test-utils'
 import { describe, it, expect, vi } from 'vitest'
 
 // Mock $fetch globally for all tests in this file
-vi.stubGlobal('$fetch', vi.fn(async (url, opts) => {
+vi.stubGlobal('$fetch', vi.fn(async () => {
   // You can customize the response based on the URL or query if needed
   return {
     results: [

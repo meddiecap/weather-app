@@ -6,7 +6,7 @@ export function assertName(name?: string) {
 }
 
 
-export function assertCoords(lat?: any, lon?: any) {
+export function assertCoords(lat?: string | number, lon?: string | number) {
     if (lat === undefined) throw new Error('Query parameter "lat" is required')
     if (lon === undefined) throw new Error('Query parameter "lon" is required')
     const la = Number(lat), lo = Number(lon)

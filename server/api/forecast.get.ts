@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { assertCoords, makeForecastKey } from '../utils/route-helpers'
+import { makeForecastKey } from '../utils/route-helpers'
 import { forecastHandler } from '../utils/forecastHandler';
 
 // ✅ Explicitly import Nuxt auto-imports so Vitest can mock them via `#imports`
@@ -8,7 +8,7 @@ import { defineCachedEventHandler, getQuery, useRuntimeConfig } from '#imports'
 export default defineCachedEventHandler(async (event) => {
     try {
         return await forecastHandler(event)
-    } catch (err: any) {
+    } catch (err: unknown) {
         if (err instanceof Error ) {
             // Parameter validation error
             return createError({ statusCode: 400, statusMessage: err.message })
