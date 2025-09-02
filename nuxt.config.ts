@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module'],
+  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/icon'],
 
   typescript: {
     strict: true

@@ -1,13 +1,16 @@
 <template>
     <div class="location-search">
-        <input v-model="search" type="text" class="input input-bordered w-full"
-            placeholder="Search for a city or location..." 
-            @focus="showDropdown = true" 
-            @click="showDropdown = true" 
-            @blur="onBlur"
-            @keydown.down.prevent="moveSelection(1)" 
-            @keydown.up.prevent="moveSelection(-1)"
-            @keydown.enter.prevent="selectHighlighted" />
+        <div class="input-wrapper">
+            <Icon name="uil:search" class="search-icon" />
+            <input v-model="search" type="search" class="input input-bordered w-full pl-10"
+                placeholder="Search for a city or location..."
+                @focus="showDropdown = true"
+                @click="showDropdown = true"
+                @blur="onBlur"
+                @keydown.down.prevent="moveSelection(1)"
+                @keydown.up.prevent="moveSelection(-1)"
+                @keydown.enter.prevent="selectHighlighted" />
+        </div>
 
         <ul v-if="showDropdown && results.length" class="dropdown-list">
             <li v-for="(result, idx) in results" :key="result.id || result.name + result.latitude + result.longitude"
@@ -83,6 +86,21 @@ const selectHighlighted = () => {
     width: 100%;
 }
 
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+.search-icon {
+    position: absolute;
+    left: 0.75em;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.2em;
+    height: 1.2em;
+    color: #888;
+    pointer-events: none;
+    z-index: 2;
+}
 .input {
     width: 100%;
     box-sizing: border-box;
