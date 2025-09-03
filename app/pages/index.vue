@@ -9,11 +9,11 @@
       <!-- Card of 2 columns wide -->
       <Card class="col-span-2">
         <template #content>          
-          <h2 class="card-title">Current location: Vancouver, BC</h2>
-          <p class="text-sm text-slate-500">49.2827, -123.1207</p>
+          <h2 class="card-title">Your location</h2>
+          <div class="text-xs text-gray-500 flex-grow-0 mb-4">Location: Berlin (52.52, 13.405)</div>
 
           <!-- Current weather -->
-           
+           <current-weather />
         </template>
       </Card> 
 
