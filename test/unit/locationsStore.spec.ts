@@ -1,22 +1,15 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia, storeToRefs } from 'pinia'
-import { useLocationsStore, type Location } from '../../stores/locations'
-import { Ref } from 'vue'
+import { useLocationsStore } from '../../stores/locations'
+import type { Location } from '../../stores/locations'
+import type { Ref } from 'vue'
 
 describe('locations store', () => {
   let store: ReturnType<typeof useLocationsStore>
-  let localStorageMock: Record<string, string>
   let locations: Ref<Location[]>
 
   beforeEach(() => {
     setActivePinia(createPinia())
-    localStorageMock = {}
-    vi.stubGlobal('localStorage', {
-      getItem: (key: string) => localStorageMock[key] ?? null,
-      setItem: (key: string, value: string) => { localStorageMock[key] = value },
-      removeItem: (key: string) => { delete localStorageMock[key] },
-      clear: () => { localStorageMock = {} }
-    })
     store = useLocationsStore()
     const { locations: locs } = storeToRefs(store)
     locations = locs
