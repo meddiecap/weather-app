@@ -16,7 +16,7 @@ export function windSpeedToBeaufort(speed: number): number {
 }
 
 // Convert wind direction in degrees to compass point (e.g., N, NE, E, ...)
-export function windDirectionToCompass(degrees: number): string {
+export function windDirectionToCompass(degrees: number): string | undefined {
     const directions = [
         'N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE',
         'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW', 'N'

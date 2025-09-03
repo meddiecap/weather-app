@@ -28,13 +28,13 @@
 import { ref, watch } from 'vue'
 
 const search = ref('')
-const results = ref<Array<{ name: string; country?: string; latitude: number; longitude: number; id?: string }>>([])
+const results = ref<Array<{ name: string; country?: string; latitude: number; longitude: number; id?: string; date_added: number }>>([])
 const loading = ref(false)
 const showDropdown = ref(false)
 const highlighted = ref(-1)
 
 const emit = defineEmits<{
-    (e: 'select', location: { name: string; latitude: number; longitude: number; country?: string }): void
+    (e: 'select', location: { name: string; latitude: number; longitude: number; country?: string; date_added: number }): void
 }>()
 
 let debounceTimeout: ReturnType<typeof setTimeout> | null = null

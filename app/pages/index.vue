@@ -34,7 +34,7 @@ import Card from '~/components/ui/Card.vue';
 
 const locationsStore = useLocationsStore()
 
-const onLocationSelect = (location: { name: string; latitude: number; longitude: number; country?: string }) => {
+const onLocationSelect = (location: { name: string; latitude: number; longitude: number; country?: string; date_added: number }) => {
   locationsStore.addOrUpdate(location)
 }
 </script>
