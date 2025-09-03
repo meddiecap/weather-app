@@ -19,7 +19,7 @@
 
       <Card>
         <template #content>
-          <location-search @select="onLocationSelect" class="mb-3" />
+          <location-search class="mb-3" @select="onLocationSelect" />
           <h2 class="card-title">Popular Locations</h2>
           <popular-locations />
         </template>

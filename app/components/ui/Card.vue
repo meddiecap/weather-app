@@ -2,8 +2,8 @@
     <div class="card bg-base-100 card-md shadow-sm">
         <div class="card-body">
             <h2 v-if="title" class="card-title">{{ title }}</h2>
-            <slot name="content"></slot>
-            <slot class="mt-6" name="footer"></slot>
+            <slot name="content" />
+            <slot class="mt-6" name="footer" />
         </div>
     </div>
 </template>
@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
-const props = defineProps<{
+defineProps<{
     title?: string
 }>()
 </script>
