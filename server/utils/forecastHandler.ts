@@ -10,10 +10,10 @@ export async function forecastHandler(event: H3Event) {
     const daily = (q.daily as string) ?? 'temperature_2m_max,temperature_2m_min,precipitation_sum'
     const timezone = (q.timezone as string) ?? 'auto'
 
-
     const url = 'https://api.open-meteo.com/v1/forecast'
     const data = await $fetch(url, {
         query: { latitude: lat, longitude: lon, hourly, daily, timezone }
     })
+    
     return data
 }
