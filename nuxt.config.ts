@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/icon'],
+  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/icon', 'pinia-plugin-persistedstate/nuxt'],
 
   typescript: {
     strict: true
