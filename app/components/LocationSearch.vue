@@ -2,18 +2,20 @@
     <div class="location-search">
         <div class="input-wrapper">
             <Icon name="uil:search" class="search-icon" />
-            <input v-model="search" type="search" class="input input-bordered w-full pl-10"
+            <input 
+                v-model="search" type="search" class="input input-bordered w-full pl-10"
                 placeholder="Search for a city or location..."
                 @focus="showDropdown = true"
                 @click="showDropdown = true"
                 @blur="onBlur"
                 @keydown.down.prevent="moveSelection(1)"
                 @keydown.up.prevent="moveSelection(-1)"
-                @keydown.enter.prevent="selectHighlighted" />
+                @keydown.enter.prevent="selectHighlighted">
         </div>
 
         <ul v-if="showDropdown && results.length" class="dropdown-list">
-            <li v-for="(result, idx) in results" :key="result.id || result.name + result.latitude + result.longitude"
+            <li 
+                v-for="(result, idx) in results" :key="result.id || result.name + result.latitude + result.longitude"
                 :class="{ highlighted: idx === highlighted }" @mousedown.prevent="selectResult(result)">
                 {{ result.name }}<span v-if="result.country">, {{ result.country }}</span>
             </li>
