@@ -11,7 +11,14 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/icon', 'pinia-plugin-persistedstate/nuxt'],
+  modules: [
+    '@nuxt/eslint',
+    '@pinia/nuxt',
+    '@nuxt/test-utils/module',
+    '@nuxt/icon',
+    'pinia-plugin-persistedstate/nuxt',
+    'nuxt-swiper'
+  ],
 
   typescript: {
     strict: true
