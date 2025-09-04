@@ -24,6 +24,12 @@
           <popular-locations />
         </template>
       </Card>
+
+      <Card class="col-span-3">
+        <template #content>
+          <todays-forecast />
+        </template>
+      </Card>
     </main>
   </div>
 </template>
