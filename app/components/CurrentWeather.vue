@@ -16,23 +16,15 @@
           <dl class="divide-y divide-gray-100 dark:divide-white/10">
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Wind</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">{{ weather.wind_speed_10m }} km/h (Bft: {{ windBeaufort }}, {{ windCompass }})</dd>
+              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{ windCompass }} {{ weather.wind_speed_10m }} km/h (Bft: {{ windBeaufort }})</dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Cloud cover</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">{{ weather.cloud_cover }}%</dd>
+              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{ weather.cloud_cover }}%</dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Precipitation</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">{{ weather.precipitation }} mm</dd>
-            </div>
-            <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
-              <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Condition</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">{{ weather.weather_code }}</dd>
-            </div>
-            <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
-              <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Daytime</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">{{ weather.is_day ? 'Yes' : 'No' }}</dd>
+              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{ weather.precipitation }} mm</dd>
             </div>
           </dl>
         </div>
