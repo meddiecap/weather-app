@@ -19,6 +19,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "eslint": "^9.33.0",
     "nuxt": "^4.0.1",
+    "nuxt-swiper": "^2.0.1",
     "ofetch": "^1.4.1",
     "openmeteo": "^1.2.0",
     "pinia": "^3.0.3",
