@@ -1,30 +1,33 @@
 <template>
   <div class="current-weather">
-    <div v-if="pending">Loading...</div>
+    <div v-if="loading">Loading...</div>
     <div v-else-if="error" class="text-red-500">Failed to load weather data.</div>
     <div v-else-if="weather">
       <div class="flex gap-4 divide-x divide-slate-300">
-        <div class="flex w-1/2">
-          <img :src="`/icons/weather_icons/static/${icon}`" alt="Weather icon">
-          <div class="text-6xl">
+        <div class="flex w-1/2 gap-4">
+          <img class="w-30" :src="`/icons/weather_icons/static/${icon}`" alt="Weather icon">
+          <div class="text-7xl">
             {{ weather.temperature_2m }}°C
           </div>
         </div>
 
         <div class="flex-grow pl-4">
-          
+
           <dl class="divide-y divide-gray-100 dark:divide-white/10">
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Wind</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{ windCompass }} {{ weather.wind_speed_10m }} km/h (Bft: {{ windBeaufort }})</dd>
+              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{
+                windCompass }} {{ weather.wind_speed_10m }} km/h (Bft: {{ windBeaufort }})</dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Cloud cover</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{ weather.cloud_cover }}%</dd>
+              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{
+                weather.cloud_cover }}%</dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Precipitation</dt>
-              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{ weather.precipitation }} mm</dd>
+              <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{
+                weather.precipitation }} mm</dd>
             </div>
           </dl>
         </div>
@@ -36,36 +39,45 @@
 <script setup lang="ts">
 import { windSpeedToBeaufort, windDirectionToCompass, getWeatherIcon } from '~/utils/weather'
 
-// Hardcoded Berlin for now
-const lat = 52.52
-const lon = 13.405
+const props = defineProps<{
+  location?: { name: string; lat: number | string; lon: number | string; timezone?: string }
+}>()
 
-const { data, pending, error } = await useFetch('/api/forecast', {
-  query: {
-    lat,
-    lon,
-    hourly: 'temperature_2m,precipitation,cloud_cover,wind_speed_10m,wind_direction_10m,weather_code,is_day',
-    // You can add more params as needed
-  },
-  // server: false // Uncomment if you want client-side fetch only
-})
+const weatherData = ref<any[]>([])
+const loading = ref<boolean>(true)
+const error = ref<string | null>(null)
+
+async function fetchTodaysWeather() {
+  const res = await $fetch('/api/forecast', {
+    query: {
+      lat: props.location?.lat,
+      lon: props.location?.lon,
+      current: 'temperature_2m,precipitation,cloud_cover,wind_speed_10m,wind_direction_10m,weather_code,is_day',
+      timezone: props.location?.timezone,
+      // You can add more params as needed
+    },
+    // server: false // Uncomment if you want client-side fetch only
+  })
+  weatherData.value = res
+  loading.value = false
+}
+
+onMounted(fetchTodaysWeather)
 
 const icon = computed(() =>
   weather.value ? getWeatherIcon(weather.value.weather_code, weather.value.is_day) : 'cloudy.svg'
 )
 
 const weather = computed(() => {
-  if (!data.value || !data.value.hourly) return null
-  // Get the latest value (last in array)
-  const idx = data.value.hourly.time?.length - 1
+  if (!weatherData.value || !weatherData.value.current) return null
   return {
-    temperature_2m: data.value.hourly.temperature_2m?.[idx],
-    precipitation: data.value.hourly.precipitation?.[idx],
-    cloud_cover: data.value.hourly.cloud_cover?.[idx],
-    wind_speed_10m: data.value.hourly.wind_speed_10m?.[idx],
-    wind_direction_10m: data.value.hourly.wind_direction_10m?.[idx],
-    weather_code: data.value.hourly.weather_code?.[idx],
-    is_day: data.value.hourly.is_day?.[idx],
+    temperature_2m: weatherData.value.current.temperature_2m,
+    precipitation: weatherData.value.current.precipitation,
+    cloud_cover: weatherData.value.current.cloud_cover,
+    wind_speed_10m: weatherData.value.current.wind_speed_10m,
+    wind_direction_10m: weatherData.value.current.wind_direction_10m,
+    weather_code: weatherData.value.current.weather_code,
+    is_day: weatherData.value.current.is_day,
   }
 })
 

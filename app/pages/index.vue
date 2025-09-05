@@ -7,13 +7,15 @@
     <main class="container grid gap-6 lg:grid-cols-3">
 
       <!-- Card of 2 columns wide -->
-      <Card class="col-span-2">
+      <Card class="col-span-2" v-if="userLocationStore.location !== null">
         <template #content>          
           <h2 class="card-title">Your location</h2>
-          <div class="text-xs text-gray-500 flex-grow-0 mb-4">Location: Berlin (52.52, 13.405)</div>
+          <div class="text-xs text-gray-500 flex-grow-0 mb-4">
+            Location: {{ userLocationStore.location.city }}, {{ userLocationStore.location.countryCode }} ({{ userLocationStore.location.lat }}, {{ userLocationStore.location.lon }})
+          </div>
 
           <!-- Current weather -->
-           <current-weather />
+           <current-weather :location="userLocationStore.location" />
         </template>
       </Card> 
 
@@ -25,9 +27,9 @@
         </template>
       </Card>
 
-      <Card class="col-span-3">
+      <Card class="col-span-3" v-if="userLocationStore.location !== null">
         <template #content>
-          <todays-forecast />
+          <todays-forecast :location="userLocationStore.location" />
         </template>
       </Card>
     </main>
@@ -37,8 +39,10 @@
 import LocationSearch from '~/components/LocationSearch.vue'
 import { useLocationsStore } from '../../stores/locations'
 import Card from '~/components/ui/Card.vue';
+import { useUserLocationStore } from '~~/stores/userLocation';
 
 const locationsStore = useLocationsStore()
+const userLocationStore = useUserLocationStore()
 
 const onLocationSelect = (location: { name: string; latitude: number; longitude: number; country?: string; date_added: number }) => {
   locationsStore.addOrUpdate(location)

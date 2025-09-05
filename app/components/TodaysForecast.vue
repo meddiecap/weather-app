@@ -2,6 +2,10 @@
 import { ref, onMounted } from 'vue'
 import { getWeatherIcon, windDirectionToCompass, windSpeedToBeaufort } from '../../app/utils/weather'
 
+const props = defineProps<{
+  location?: { name: string; lat: number; lon: number, timezone?: string }
+}>()
+
 const containerRef = ref(null)
 const hours = ref<any[]>([])
 
@@ -17,24 +21,20 @@ useSwiper(containerRef, {
   },
 })
 
-// Static location: Berlin
-const lat = 52.52
-const lon = 13.405
-
 async function fetchForecast() {
   // Use your API route for forecast
   const res = await $fetch('/api/forecast', {
     query: {
-      lat,
-      lon,
+      lat: props.location?.lat,
+      lon: props.location?.lon,
       hourly: 'temperature_2m,weathercode,windspeed_10m,winddirection_10m',
-      timezone: 'Europe/Berlin',
+      timezone: props.location?.timezone,
       forecast_days: 2,
     },
   })
 
   // Get the current time in the forecast's timezone
-  const tz = res.timezone || 'Europe/Berlin'
+  const tz = res.timezone
   const formatter = new Intl.DateTimeFormat('en-CA', {
     timeZone: tz,
     year: 'numeric',
