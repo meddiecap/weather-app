@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { getWeatherIcon, windDirectionToCompass, windSpeedToBeaufort } from '../../app/utils/weather'
+import type { Location } from '~~/types/Location'
 
 const props = defineProps<{
-  location?: { name: string; lat: number; lon: number, timezone?: string }
+  location: Location
 }>()
 
 const containerRef = ref(null)

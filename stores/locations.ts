@@ -1,14 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-export type Location = {
-    name: string
-    latitude: number
-    longitude: number
-    country?: string
-    count: number
-    date_added: number
-}
+import type { Location } from '../types/Location'
 
 const MAX_LOCATIONS = 10
 
@@ -17,7 +9,7 @@ export const useLocationsStore = defineStore('locations', () => {
 
     const addOrUpdate = (location: Omit<Location, 'count' | 'date_added'>) => {
         const idx = locations.value.findIndex(
-            l => l.name === location.name && l.latitude === location.latitude && l.longitude === location.longitude
+            l => l.name === location.name && l.lat === location.lat && l.lon === location.lon
         )
         if (idx !== -1) {
             if (locations.value[idx]) {
@@ -36,9 +28,9 @@ export const useLocationsStore = defineStore('locations', () => {
         locations.value.sort((a, b) => b.count - a.count || b.date_added - a.date_added)
     }
 
-    const remove = (location: { name: string; latitude: number; longitude: number }) => {
+    const remove = (location: { name: string; lat: number; lon: number }) => {
         locations.value = locations.value.filter(
-            l => !(l.name === location.name && l.latitude === location.latitude && l.longitude === location.longitude)
+            l => !(l.name === location.name && l.lat === location.lat && l.lon === location.lon)
         )
     }
 

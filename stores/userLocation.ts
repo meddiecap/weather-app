@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import type { Location } from '../types/Location'
 
 export const useUserLocationStore = defineStore('userLocation', () => {
-  const location = ref(null)
+  const location = ref<Location | null>(null)
   const loading = ref(false)
-  const error = ref(null)
+  const error = ref<unknown | null>(null)
 
   async function fetchLocation() {
     if (location.value || loading.value) return
