@@ -1,3 +1,5 @@
+import { createHash } from 'crypto';
+
 export function assertName(name?: string) {
     if (!name) throw new Error('Query parameter "name" is required')
     const n = String(name).trim()
@@ -34,5 +36,11 @@ export function makeForecastKey(q: { lat?: string; lon?: string; current?: strin
         q.model ? `model=${q.model}` : '',
         q.timezone ? `tz=${q.timezone}` : ''
     ].filter(Boolean)
-    return `forecast::${parts.join('|')}`
+
+    // create a hash of the key parts to ensure the cache key is not too long
+    // especially when many hourly/daily fields are requested
+    // This also helps to avoid issues with special characters in the cache key.
+    const hash = createHash('sha256').update(parts.join('|')).digest('hex')
+    
+    return `forecast::${hash}`
 }
