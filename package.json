@@ -10,7 +10,8 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "typecheck": "vue-tsc --noEmit",
-    "test:unit": "vitest run --reporter=verbose"
+    "test:unit": "vitest run --reporter=verbose",
+    "python:era5:test": "echo '{\"year\":\"2024\",\"month\":[\"06\"],\"day\":[\"01\",\"02\"]}' | py scripts/fetch_era5.py"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.8.0",
