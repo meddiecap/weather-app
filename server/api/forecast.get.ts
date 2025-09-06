@@ -22,9 +22,11 @@ export default defineCachedEventHandler(async (event) => {
     })(),
     getKey: (event: H3Event) => {
         const q = getQuery(event)
+
         return makeForecastKey({
             lat: q.lat ? String(q.lat) : undefined,
             lon: q.lon ? String(q.lon) : undefined,
+            current: q.current ? String(q.current) : undefined,
             hourly: q.hourly ? String(q.hourly) : undefined,
             daily: q.daily ? String(q.daily) : undefined,
             model: q.model ? String(q.model) : undefined,
