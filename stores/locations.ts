@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { Location } from '../types/Location'
+import type { Location } from '~~/types/Location'
 
 const MAX_LOCATIONS = 10
 

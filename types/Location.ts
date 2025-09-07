@@ -4,6 +4,7 @@ export interface Location {
     city?: string;
     region?: string;
     country?: string;
+    countryCode?: string;
     timezone?: string;
     name?: string;
     count: number;

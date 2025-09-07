@@ -44,7 +44,7 @@ import { useUserLocationStore } from '~~/stores/userLocation';
 const locationsStore = useLocationsStore()
 const userLocationStore = useUserLocationStore()
 
-const onLocationSelect = (location: { name: string; latitude: number; longitude: number; country?: string; date_added: number }) => {
+const onLocationSelect = (location: Omit<Location, 'count' | 'date_added'>) => {
   locationsStore.addOrUpdate(location)
 }
 </script>

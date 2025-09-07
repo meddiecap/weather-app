@@ -5,7 +5,7 @@ import type { Location } from '../types/Location'
 
 type Row = Record<string, any>
 
-function makeKey(loc: Location) {
+function makeKey(loc: Pick<Location, 'lat' | 'lon'>): string {
     const lat = Number(loc.lat)
     const lon = Number(loc.lon)
     // Normalize to stable precision so "49.2" and "49.2000" map to the same key
@@ -15,7 +15,7 @@ function makeKey(loc: Location) {
 export const useWeatherStore = defineStore('weather', () => {
     const data: Record<string, Row> = reactive({})
 
-    async function fetchWeather(location: Location) {
+    async function fetchWeather(location: Pick<Location, 'lat' | 'lon' | 'timezone'>) {
         const key = makeKey(location)
         if (data[key] !== undefined) return
         try {
