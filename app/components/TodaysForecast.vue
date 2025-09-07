@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { getWeatherIcon, windDirectionToCompass, windSpeedToBeaufort } from '../../app/utils/weather'
 import type { Location } from '~~/types/Location'
 import type { HourForecast } from '~~/types/HourForecast'
+import type { HourlyWeather } from '~~/types/WeatherData'
 import { useWeatherStore } from '~~/stores/weather'
 
 const props = defineProps<{
@@ -62,16 +63,19 @@ const nowIdx: number = (() => {
 })()
 
 const count = 24
-// Get 24 hours of data starting from nowIdx, no not wrap around
-const get24 = (arr: unknown[]): unknown[] => {
+// Get 24 hours of data starting from nowIdx, no not wrap around.
+// Allow any array, not just specific types in Linter
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const get24 = (arr: any[]): any[] => {
   return arr.slice(nowIdx, nowIdx + count)
 }
 
 if (weather.value) {
-  const temps = get24(weather.value.hourly.temperature_2m)
-  const codes = get24(weather.value.hourly.weather_code)
-  const windSpeeds = get24(weather.value.hourly.wind_speed_10m)
-  const windDirs = get24(weather.value.hourly.wind_direction_10m)
+  const hourly = weather.value.hourly as HourlyWeather
+  const temps = get24(hourly.temperature_2m)
+  const codes = get24(hourly.weather_code)
+  const windSpeeds = get24(hourly.wind_speed_10m)
+  const windDirs = get24(hourly.wind_direction_10m)
   const times24 = get24(times)
 
   hours.value = times24.map((t: string, i: number) => ({
@@ -81,7 +85,7 @@ if (weather.value) {
     weather_code: codes[i],
     icon: getWeatherIcon(codes[i], true),
     winddirection: windDirs[i],
-    winddirection_compass: windDirectionToCompass(windDirs[i]),
+    winddirection_compass: windDirectionToCompass(windDirs[i]) ?? '',
     windspeed: windSpeeds[i],
     beaufort: windSpeedToBeaufort(windSpeeds[i]),
   }))
