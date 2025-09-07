@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { getWeatherIcon, windDirectionToCompass, windSpeedToBeaufort } from '../../app/utils/weather'
 import type { Location } from '~~/types/Location'
+import type { HourForecast } from '~~/types/HourForecast'
 import { useWeatherStore } from '~~/stores/weather'
 
 const props = defineProps<{
@@ -9,15 +10,14 @@ const props = defineProps<{
 }>()
 
 const containerRef = ref(null)
-const hours = ref<any[]>([])
+const hours = ref<HourForecast[]>([])
 
 const weatherStore = useWeatherStore()
 const weatherKey = computed(() => weatherStore.makeKey(props.location))
-
 const weather = computed(() => weatherStore.data[weatherKey.value])
 
 // Get the current time in the forecast's timezone
-const tz = weather.value?.timezone
+const tz = weather.value?.timezone as string
 const formatter = new Intl.DateTimeFormat('en-CA', {
   timeZone: tz,
   year: 'numeric',
@@ -50,7 +50,7 @@ useSwiper(containerRef, {
 })
 
 // Find the index of the current hour in the forecast data
-const times: string[] = weather.value?.hourly.time
+const times: string[] = (weather.value?.hourly as { time: string[] })?.time
 
 const nowIdx: number = (() => {
   let idx = times.findIndex(t => t.startsWith(currentHourIso))
@@ -63,7 +63,7 @@ const nowIdx: number = (() => {
 
 const count = 24
 // Get 24 hours of data starting from nowIdx, no not wrap around
-const get24 = (arr: any[]) => {
+const get24 = (arr: unknown[]): unknown[] => {
   return arr.slice(nowIdx, nowIdx + count)
 }
 
@@ -92,18 +92,20 @@ if (weather.value) {
 <template>
   <ClientOnly>
     <swiper-container ref="containerRef" :init="false" class="divide-x divide-gray-200">
-      <swiper-slide v-for="(hour, idx) in hours" :key="idx">
-        <div :data-original-time="hour.original_time">
-          <div class="text-xl mb-6">{{ hour.temperature }} °C</div>
-          <img :src="`/icons/weather_icons/static/${hour.icon}`" :data-weather-code="hour.weather_code" class="w-full">
-          <div class="mb-3">{{ hour.time }}</div>
+      <swiper-slide v-for="(data, idx) in hours" :key="idx">
+        <div :data-original-time="data.original_time">
+          <div class="text-xl mb-6">{{ data.temperature }} °C</div>
+          <img :src="`/icons/weather_icons/static/${data.icon}`" :data-weather-code="data.weather_code" class="w-full">
+          <div class="mb-3">{{ data.time }}</div>
           <div class="mb-3">
-            <i :title="hour.winddirection_compass?.toLowerCase()"
-              :class="`text-3xl wi wi-wind from-${hour.winddirection}-deg`" />
+            <i 
+              :title="data.winddirection_compass?.toLowerCase()"
+              :class="`text-3xl wi wi-wind from-${data.winddirection}-deg`" />
           </div>
           <div>
-            <i :title="`${hour.beaufort} on Beaufort Scale, ${hour.windspeed} km/h`"
-              :class="`text-3xl wi wi-wind-beaufort-${hour.beaufort}`" />
+            <i 
+              :title="`${data.beaufort} on Beaufort Scale, ${data.windspeed} km/h`"
+              :class="`text-3xl wi wi-wind-beaufort-${data.beaufort}`" />
           </div>
         </div>
       </swiper-slide>

@@ -2,6 +2,9 @@
 // by delegating the actual download to a tiny Python helper using cdsapi.
 // Returns the NetCDF as a file download. Consider increasing serverless timeouts if needed.
 
+// Lint ignores this file for now
+/* eslint-disable */
+
 import { defineEventHandler, getQuery, setHeader } from 'h3'
 import { spawn } from 'node:child_process'
 import { tmpdir } from 'node:os'

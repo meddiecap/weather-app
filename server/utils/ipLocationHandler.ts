@@ -1,6 +1,22 @@
 // utils/ipLocationHandler.ts
+export interface IpApiResponse {
+  status: string;
+  country: string;
+  countryCode: string;
+  region: string;
+  regionName: string;
+  city: string;
+  zip: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  isp: string;
+  org: string;
+  as: string;
+  query: string;
+  // You can add more fields if needed
+}
 
-// utils/ipLocationHandler.ts
-export async function ipLocationHandler(ip: string): Promise<any> {
-  return await $fetch(`http://ip-api.com/json/${ip}`)
+export async function ipLocationHandler(ip: string): Promise<IpApiResponse> {
+  return await $fetch<IpApiResponse>(`http://ip-api.com/json/${ip}`);
 }

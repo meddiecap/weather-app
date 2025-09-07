@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { reactive } from 'vue'
 import type { Location } from '../types/Location'
 
-type Row = Record<string, any>
+type Row = Record<string, unknown>
 
 function makeKey(loc: Pick<Location, 'lat' | 'lon'>): string {
     const lat = Number(loc.lat)
@@ -30,7 +30,7 @@ export const useWeatherStore = defineStore('weather', () => {
                     timezone: location.timezone || 'auto',
                 },
             })
-        } catch (e: any) {
+        } catch (e: unknown) {
             console.error('Error fetching weather for key:', key, e)
         }
     }
