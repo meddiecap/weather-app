@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { getWeatherIcon, windDirectionToCompass, windSpeedToBeaufort } from '../../app/utils/weather'
 import type { Location } from '~~/types/Location'
+import { useWeatherStore } from '~~/stores/weather'
 
 const props = defineProps<{
   location: Location
@@ -10,7 +11,33 @@ const props = defineProps<{
 const containerRef = ref(null)
 const hours = ref<any[]>([])
 
-// Swiper setup (keep as before)
+const weatherStore = useWeatherStore()
+const weatherKey = computed(() => weatherStore.makeKey(props.location))
+
+const weather = computed(() => weatherStore.data[weatherKey.value])
+
+// Get the current time in the forecast's timezone
+const tz = weather.value?.timezone
+const formatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: tz,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false
+})
+
+// Format: YYYY-MM-DDTHH:00
+const parts = formatter.formatToParts(new Date())
+const year = parts.find(p => p.type === 'year')?.value
+const month = parts.find(p => p.type === 'month')?.value
+const day = parts.find(p => p.type === 'day')?.value
+const hour = parts.find(p => p.type === 'hour')?.value
+const currentHourIso = `${year}-${month}-${day}T${hour}:00`
+
+// Swiper setup
 useSwiper(containerRef, {
   slidesPerView: 4,
   spaceBetween: 0,
@@ -22,57 +49,29 @@ useSwiper(containerRef, {
   },
 })
 
-async function fetchForecast() {
-  // Use your API route for forecast
-  const res = await $fetch('/api/forecast', {
-    query: {
-      lat: props.location?.lat,
-      lon: props.location?.lon,
-      hourly: 'temperature_2m,weathercode,windspeed_10m,winddirection_10m',
-      timezone: props.location?.timezone,
-      forecast_days: 2,
-    },
-  })
+// Find the index of the current hour in the forecast data
+const times: string[] = weather.value?.hourly.time
 
-  // Get the current time in the forecast's timezone
-  const tz = res.timezone
-  const formatter = new Intl.DateTimeFormat('en-CA', {
-    timeZone: tz,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  })
-
-  // Format: YYYY-MM-DDTHH:00
-  const parts = formatter.formatToParts(new Date())
-  const year = parts.find(p => p.type === 'year')?.value
-  const month = parts.find(p => p.type === 'month')?.value
-  const day = parts.find(p => p.type === 'day')?.value
-  const hour = parts.find(p => p.type === 'hour')?.value
-  const currentHourIso = `${year}-${month}-${day}T${hour}:00`
-
-  // Find the index of the current hour in the forecast data
-  const times: string[] = res.hourly.time
-  let nowIdx = times.findIndex(t => t.startsWith(currentHourIso))
-  if (nowIdx === -1) {
+const nowIdx: number = (() => {
+  let idx = times.findIndex(t => t.startsWith(currentHourIso))
+  if (idx === -1) {
     // fallback: find the first hour >= current hour
-    nowIdx = times.findIndex(t => t >= currentHourIso)
-    if (nowIdx === -1) nowIdx = 0
+    idx = times.findIndex(t => t >= currentHourIso)
   }
-  const count = 24
-  // Handle wrap-around if near the end of the array
-  const get24 = (arr: any[]) => {
-    if (nowIdx + count <= arr.length) return arr.slice(nowIdx, nowIdx + count)
-    return arr.slice(nowIdx).concat(arr.slice(0, (nowIdx + count) % arr.length))
-  }
-  const temps = get24(res.hourly.temperature_2m)
-  const codes = get24(res.hourly.weathercode)
-  const windSpeeds = get24(res.hourly.windspeed_10m)
-  const windDirs = get24(res.hourly.winddirection_10m)
+  return idx
+})()
+
+const count = 24
+// Get 24 hours of data starting from nowIdx, no not wrap around
+const get24 = (arr: any[]) => {
+  return arr.slice(nowIdx, nowIdx + count)
+}
+
+if (weather.value) {
+  const temps = get24(weather.value.hourly.temperature_2m)
+  const codes = get24(weather.value.hourly.weather_code)
+  const windSpeeds = get24(weather.value.hourly.wind_speed_10m)
+  const windDirs = get24(weather.value.hourly.wind_direction_10m)
   const times24 = get24(times)
 
   hours.value = times24.map((t: string, i: number) => ({
@@ -88,7 +87,6 @@ async function fetchForecast() {
   }))
 }
 
-onMounted(fetchForecast)
 </script>
 
 <template>
@@ -100,13 +98,11 @@ onMounted(fetchForecast)
           <img :src="`/icons/weather_icons/static/${hour.icon}`" :data-weather-code="hour.weather_code" class="w-full">
           <div class="mb-3">{{ hour.time }}</div>
           <div class="mb-3">
-            <i 
-              :title="hour.winddirection_compass?.toLowerCase()"
+            <i :title="hour.winddirection_compass?.toLowerCase()"
               :class="`text-3xl wi wi-wind from-${hour.winddirection}-deg`" />
           </div>
           <div>
-            <i 
-              :title="`${hour.beaufort} on Beaufort Scale, ${hour.windspeed} km/h`"
+            <i :title="`${hour.beaufort} on Beaufort Scale, ${hour.windspeed} km/h`"
               :class="`text-3xl wi wi-wind-beaufort-${hour.beaufort}`" />
           </div>
         </div>

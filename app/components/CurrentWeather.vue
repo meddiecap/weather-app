@@ -1,13 +1,11 @@
 <template>
   <div class="current-weather">
-    <div v-if="loading">Loading...</div>
-    <div v-else-if="error" class="text-red-500">Failed to load weather data.</div>
-    <div v-else-if="weather">
+    <div v-if="weather">
       <div class="flex gap-4 divide-x divide-slate-300">
         <div class="flex w-1/2 gap-4">
           <img class="w-30" :src="`/icons/weather_icons/static/${icon}`" alt="Weather icon">
           <div class="text-7xl">
-            {{ weather.temperature_2m }}°C
+            {{ weather.current.temperature_2m }}°C
           </div>
         </div>
 
@@ -17,17 +15,17 @@
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Wind</dt>
               <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{
-                windCompass }} {{ weather.wind_speed_10m }} km/h (Bft: {{ windBeaufort }})</dd>
+                windCompass }} {{ weather.current.wind_speed_10m }} km/h (Bft: {{ windBeaufort }})</dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Cloud cover</dt>
               <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{
-                weather.cloud_cover }}%</dd>
+                weather.current.cloud_cover }}%</dd>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-0">
               <dt class="text-sm/6 font-medium text-gray-900 dark:text-gray-100">Precipitation</dt>
               <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400 text-right">{{
-                weather.precipitation }} mm</dd>
+                weather.current.precipitation }} mm</dd>
             </div>
           </dl>
         </div>
@@ -37,54 +35,26 @@
 </template>
 
 <script setup lang="ts">
+import { useWeatherStore } from '~~/stores/weather'
 import { windSpeedToBeaufort, windDirectionToCompass, getWeatherIcon } from '~/utils/weather'
+import type { Location } from '~~/types/Location'
 
 const props = defineProps<{
-  location?: { name: string; lat: number | string; lon: number | string; timezone?: string }
+  location: Location
 }>()
 
-const weatherData = ref<any[]>([])
-const loading = ref<boolean>(true)
-const error = ref<string | null>(null)
+const weatherStore = useWeatherStore()
+const weatherKey = computed(() => weatherStore.makeKey(props.location))
 
-async function fetchTodaysWeather() {
-  const res = await $fetch('/api/forecast', {
-    query: {
-      lat: props.location?.lat,
-      lon: props.location?.lon,
-      current: 'temperature_2m,precipitation,cloud_cover,wind_speed_10m,wind_direction_10m,weather_code,is_day',
-      timezone: props.location?.timezone,
-      // You can add more params as needed
-    },
-    // server: false // Uncomment if you want client-side fetch only
-  })
-  weatherData.value = res
-  loading.value = false
-}
-
-onMounted(fetchTodaysWeather)
+const weather = computed(() => weatherStore.data[weatherKey.value])
 
 const icon = computed(() =>
-  weather.value ? getWeatherIcon(weather.value.weather_code, weather.value.is_day) : 'cloudy.svg'
+  weather.value ? getWeatherIcon(weather.value.current.weather_code, weather.value.current.is_day) : 'cloudy.svg'
 )
-
-const weather = computed(() => {
-  if (!weatherData.value || !weatherData.value.current) return null
-  return {
-    temperature_2m: weatherData.value.current.temperature_2m,
-    precipitation: weatherData.value.current.precipitation,
-    cloud_cover: weatherData.value.current.cloud_cover,
-    wind_speed_10m: weatherData.value.current.wind_speed_10m,
-    wind_direction_10m: weatherData.value.current.wind_direction_10m,
-    weather_code: weatherData.value.current.weather_code,
-    is_day: weatherData.value.current.is_day,
-  }
-})
-
 const windBeaufort = computed(() =>
-  weather.value?.wind_speed_10m != null ? windSpeedToBeaufort(weather.value.wind_speed_10m) : ''
+  weather.value?.current.wind_speed_10m != null ? windSpeedToBeaufort(weather.value.current.wind_speed_10m) : ''
 )
 const windCompass = computed(() =>
-  weather.value?.wind_direction_10m != null ? windDirectionToCompass(weather.value.wind_direction_10m) : ''
+  weather.value?.current.wind_direction_10m != null ? windDirectionToCompass(weather.value.current.wind_direction_10m) : ''
 )
 </script>
