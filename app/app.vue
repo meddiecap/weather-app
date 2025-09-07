@@ -17,12 +17,8 @@ useHead({
 
 // Get the user location based on IP and store it
 const userLocation = useUserLocationStore()
-onMounted(async () => {
-  if (!userLocation.location) {
-    await userLocation.fetchLocation()
-    console.log('Fetched user location app.vue:', userLocation.location)
-  }
-})
+await userLocation.fetchLocation()
+console.log('Fetched user location app.vue:', userLocation.location)
 
 // Example dark-mode toggle (add/remove 'dark' on <html>)
 onMounted(() => {
