@@ -124,4 +124,7 @@ swiper-slide {
   align-items: center;
   text-align: center;
 }
+swiper-slide:first-child {
+  border-left-width: 1px;
+}
 </style>
