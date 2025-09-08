@@ -4,7 +4,7 @@
       <h1>The Weather Today</h1>
     </header>
 
-    <main class="container grid gap-6 lg:grid-cols-3">
+    <div class="container grid gap-6 lg:grid-cols-3">
 
       <!-- Card of 2 columns wide -->
       <Card class="col-span-2">
@@ -32,7 +32,7 @@
           <todays-forecast v-if="userLocationStore.location" :location="userLocationStore.location" />
         </template>
       </Card>
-    </main>
+    </div>
   </div>
 </template>
 
