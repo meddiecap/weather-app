@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia, storeToRefs } from 'pinia'
 import { useLocationsStore } from '../../stores/locations'
-import type { Location } from '../../stores/locations'
+import type { Location } from '../../types/Location'
 import type { Ref } from 'vue'
 
 describe('locations store', () => {

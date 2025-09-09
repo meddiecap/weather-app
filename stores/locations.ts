@@ -28,7 +28,7 @@ export const useLocationsStore = defineStore('locations', () => {
         locations.value.sort((a, b) => b.count - a.count || b.date_added - a.date_added)
     }
 
-    const remove = (location: { name: string; lat: number; lon: number }) => {
+    const remove = (location: Location) => {
         locations.value = locations.value.filter(
             l => !(l.name === location.name && l.lat === location.lat && l.lon === location.lon)
         )
