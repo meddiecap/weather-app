@@ -107,34 +107,37 @@ if (weather.value) {
           <swiper-slide v-for="(data, idx) in hours" :key="idx">
             <div :data-original-time="data.original_time" class="w-full flex flex-col items-center">
               <div class="text-xl mb-6">{{ data.temperature }} °C</div>
-              <img :src="`/icons/weather_icons/static/${data.icon}`" :data-weather-code="data.weather_code"
+              <img 
+                :src="`/icons/weather_icons/static/${data.icon}`" :data-weather-code="data.weather_code"
                 class="w-4/6">
               <div class="mb-3">{{ data.time }}</div>
               <div class="mb-3">
-                <i :title="data.winddirection_compass?.toLowerCase()"
+                <i 
+                  :title="data.winddirection_compass?.toLowerCase()"
                   :class="`text-3xl wi wi-wind from-${data.winddirection}-deg`" />
               </div>
               <div class="mb-6">
-                <i :title="`${data.beaufort} on Beaufort Scale, ${data.windspeed} km/h`"
+                <i 
+                  :title="`${data.beaufort} on Beaufort Scale, ${data.windspeed} km/h`"
                   :class="`text-3xl wi wi-wind-beaufort-${data.beaufort}`" />
               </div>
 
               
               <div class="temperature-graph flex w-full">
                 <SvgTemperatureLine
-                  :minTemp="minTemp"
-                  :maxTemp="maxTemp"
-                  :startTemp="idx > 0 ? hours[idx - 1]?.temperature as number : data.temperature"
-                  :endTemp="data.temperature"
-                  :circleX="100"
+                  :min-temp="minTemp"
+                  :max-temp="maxTemp"
+                  :start-temp="idx > 0 ? hours[idx - 1]?.temperature as number : data.temperature"
+                  :end-temp="data.temperature"
+                  :circle-x="100"
                 />
 
                 <SvgTemperatureLine
-                  :minTemp="minTemp"
-                  :maxTemp="maxTemp"
-                  :startTemp="data.temperature"
-                  :endTemp="idx < hours.length - 1 ? hours[idx + 1]?.temperature as number : data.temperature"
-                  :circleX="0"
+                  :min-temp="minTemp"
+                  :max-temp="maxTemp"
+                  :start-temp="data.temperature"
+                  :end-temp="idx < hours.length - 1 ? hours[idx + 1]?.temperature as number : data.temperature"
+                  :circle-x="0"
                 />
               </div>
             </div>

@@ -1,9 +1,11 @@
 <template>
     <svg viewBox="0 0 100 100" height="72" preserveAspectRatio="none">
-        <path :d="`M0,${tempToY(from)} L100,${tempToY(to)} L100,100 L0,100 Z`" fill="#F79C9F"
+        <path 
+            :d="`M0,${tempToY(from)} L100,${tempToY(to)} L100,100 L0,100 Z`" fill="#F79C9F"
             style="opacity:.2" />
 
-        <line :x1="0" :y1="tempToY(from)" :x2="100" :y2="tempToY(to)"
+        <line 
+            :x1="0" :y1="tempToY(from)" :x2="100" :y2="tempToY(to)"
             style="stroke: #ED2329;stroke-width: 5;" />
 
         <circle :cx="circleX" :cy="tempToY(circlY)" r="8" stroke-width="0" fill="#ED2329" />
