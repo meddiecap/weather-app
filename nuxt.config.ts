@@ -17,7 +17,8 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     '@nuxt/icon',
     'pinia-plugin-persistedstate/nuxt',
-    'nuxt-swiper'
+    'nuxt-swiper',
+    '@nuxt/image'
   ],
 
   typescript: {

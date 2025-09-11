@@ -1,6 +1,15 @@
 <!-- layouts/default.vue -->
 <script setup lang="ts">
-// Nothing special here; this layout wraps all pages by default.
+import LocationSearch from '~/components/LocationSearch.vue'
+import { useLocationsStore } from '../../stores/locations'
+
+import type { Location } from '~~/types/Location'
+
+const locationsStore = useLocationsStore()
+const onLocationSelect = (location: Omit<Location, 'count' | 'date_added'>) => {
+  locationsStore.addOrUpdate(location)
+}
+
 </script>
 
 <template>
@@ -12,29 +21,50 @@
 
     <div class="min-h-dvh bg-grad-day dark:bg-grad-night text-base-content">
       <!-- Header / Navbar -->
-      <header class="sticky top-0 z-40 border-b border-base-300 bg-base-100/80 backdrop-blur">
+      <header class="sticky top-0 z-40 border-b border-base-300">
         <div class="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="navbar-start">
+            <div class="dropdown">
+              <ul
+                tabindex="0"
+                class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                <li><NuxtLink to="/" class="btn btn-ghost btn-sm">Home</NuxtLink></li>
+                <li>
+                  <a>UI</a>
+                  <ul class="p-2">
+                    <li><NuxtLink to="/ui-overview" class="btn btn-ghost btn-sm">Overview</NuxtLink></li>
+                    <li><NuxtLink to="/buttons" class="btn btn-ghost btn-sm">Buttons</NuxtLink></li>
+                    <li><NuxtLink to="/badges" class="btn btn-ghost btn-sm">Badges</NuxtLink></li>
+                    <li><NuxtLink to="/cards" class="btn btn-ghost btn-sm">Cards</NuxtLink></li>
+                  </ul>
+                </li>
+              </ul>
+              <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+              </div>
+            </div>
             <NuxtLink to="/" class="font-semibold tracking-tight text-lg">
-              WeatherApp
+              The Weather Today
             </NuxtLink>
           </div>
-
-          <div class="navbar-center hidden md:flex">
-            <nav class="menu menu-horizontal gap-1">
-              <NuxtLink to="/ui-overview" class="btn btn-ghost btn-sm">Overview</NuxtLink>
-              <NuxtLink to="/buttons" class="btn btn-ghost btn-sm">Buttons</NuxtLink>
-              <NuxtLink to="/badges" class="btn btn-ghost btn-sm">Badges</NuxtLink>
-              <NuxtLink to="/cards" class="btn btn-ghost btn-sm">Cards</NuxtLink>
-              <!-- Add more demo pages here -->
-            </nav>
+          <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">      
+              <li><NuxtLink to="/" class="btn btn-ghost btn-sm">Home</NuxtLink></li>
+              <li>
+                <details>
+                  <summary>UI</summary>
+                  <ul class="p-2">
+                    <li><NuxtLink to="/ui-overview" class="btn btn-ghost btn-sm">Overview</NuxtLink></li>
+                    <li><NuxtLink to="/buttons" class="btn btn-ghost btn-sm">Buttons</NuxtLink></li>
+                    <li><NuxtLink to="/badges" class="btn btn-ghost btn-sm">Badges</NuxtLink></li>
+                    <li><NuxtLink to="/cards" class="btn btn-ghost btn-sm">Cards</NuxtLink></li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
           </div>
-
           <div class="navbar-end">
-            <!-- Example placeholder for future actions -->
-            <button class="btn btn-ghost btn-sm" aria-label="User menu">
-              <span class="i">☰</span>
-            </button>
+            <location-search @select="onLocationSelect" />
           </div>
         </div>
       </header>

@@ -1,9 +1,6 @@
 <template>
   <div class="min-h-screen text-slate-900 dark:text-slate-100">
-    <header class="container py-6 prose">
-      <h1>The Weather Today</h1>
-    </header>
-
+<popular-locations />
     <div class="container grid gap-6 lg:grid-cols-3">
 
       <!-- Card of 2 columns wide -->
@@ -19,11 +16,12 @@
         </template>
       </Card> 
 
-      <Card>
+      <Card no-padding>
         <template #content>
-          <location-search class="mb-3" @select="onLocationSelect" />
-          <h2 class="card-title">Popular Locations</h2>
-          <popular-locations />
+          <static-map v-if="userLocationStore.location" 
+            :lat="userLocationStore.location.lat"
+            :lon="userLocationStore.location.lon"
+          />
         </template>
       </Card>
 
@@ -37,14 +35,10 @@
 </template>
 
 <script setup lang="ts">
-import LocationSearch from '~/components/LocationSearch.vue'
-import { useLocationsStore } from '../../stores/locations'
 import Card from '~/components/ui/Card.vue';
 import { useUserLocationStore } from '~~/stores/userLocation';
 import { useWeatherStore } from '~~/stores/weather';
-import type { Location } from '~~/types/Location'
 
-const locationsStore = useLocationsStore()
 const userLocationStore = useUserLocationStore()
 const weatherStore = useWeatherStore()
 
@@ -57,7 +51,4 @@ if (userLocationStore.location) {
   })
 }
 
-const onLocationSelect = (location: Omit<Location, 'count' | 'date_added'>) => {
-  locationsStore.addOrUpdate(location)
-}
 </script>
