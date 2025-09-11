@@ -20,7 +20,7 @@ describe('/api/search', () => {
   it('returns geocoding data for valid name', async () => {
     const res = await $fetch('/api/search', {
       query: { name: 'Berlin' }
-    })
+    }) as { results: { name: string; latitude: number; longitude: number }[] }
     expect(res).toHaveProperty('results')
     expect(res.results[0].name).toBe('Berlin')
   })
