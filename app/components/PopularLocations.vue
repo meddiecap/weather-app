@@ -18,7 +18,6 @@
         </button>
       </li>
     </ul>
-    <div v-if="!locations.length" class="text-gray-400">No popular locations yet.</div>
   </div>
 </template>
 
