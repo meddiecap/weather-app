@@ -23,15 +23,16 @@ export default defineNuxtConfig({
   typescript: {
     strict: true
   },
-
+  
   runtimeConfig: {
     cacheTtl: {
       search: 30,       // default 30s
       forecast: 600,    // default 10m
     },
+    mapBoxAccessToken: process.env.MAPBOX_ACCESS_TOKEN || '',
     public: {
       // optionally expose for client hints, but server uses private config above
-      cacheTtl: 600
+      cacheTtl: 600,
     }
   }
 })
