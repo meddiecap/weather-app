@@ -1,10 +1,11 @@
 <template>
-    <div class="location-search">
+    <div class="location-search w-72">
         <div class="input-wrapper">
-            <Icon name="uil:search" class="search-icon" />
+            <Icon v-if="loading" name="uil:spinner" class="search-icon animate-spin" />
+            <Icon v-else name="uil:search" class="search-icon" />
             <input 
                 v-model="search" type="search" class="input input-bordered w-full pl-10"
-                placeholder="Search for a city or location..."
+                placeholder="Search a city or location..."
                 @focus="showDropdown = true"
                 @click="showDropdown = true"
                 @blur="onBlur"
@@ -20,7 +21,6 @@
                 {{ result.name }}<span v-if="result.country">, {{ result.country }}</span>
             </li>
         </ul>
-        <div v-if="loading" class="loading">Searching...</div>
     </div>
 </template>
 
@@ -85,7 +85,6 @@ const selectHighlighted = () => {
 <style scoped>
 .location-search {
     position: relative;
-    width: 100%;
 }
 
 .input-wrapper {
@@ -95,8 +94,7 @@ const selectHighlighted = () => {
 .search-icon {
     position: absolute;
     left: 0.75em;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0.71em;
     width: 1.2em;
     height: 1.2em;
     color: #888;
