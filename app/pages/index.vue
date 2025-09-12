@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen text-slate-900 dark:text-slate-100">
-<popular-locations />
     <div class="container grid gap-6 lg:grid-cols-3">
 
       <!-- Card of 2 columns wide -->

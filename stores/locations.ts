@@ -36,5 +36,7 @@ export const useLocationsStore = defineStore('locations', () => {
 
     return { locations: locations, addOrUpdate, remove }
 }, {
-    persist: true
+    persist: {
+        storage: localStorage,
+    }
 })

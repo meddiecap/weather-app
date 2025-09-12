@@ -1,15 +1,6 @@
 <!-- layouts/default.vue -->
 <script setup lang="ts">
 import LocationSearch from '~/components/LocationSearch.vue'
-import { useLocationsStore } from '../../stores/locations'
-
-import type { Location } from '~~/types/Location'
-
-const locationsStore = useLocationsStore()
-const onLocationSelect = (location: Omit<Location, 'count' | 'date_added'>) => {
-  locationsStore.addOrUpdate(location)
-}
-
 </script>
 
 <template>
@@ -64,7 +55,9 @@ const onLocationSelect = (location: Omit<Location, 'count' | 'date_added'>) => {
             </ul>
           </div>
           <div class="navbar-end">
-            <location-search @select="onLocationSelect" />
+            <ClientOnly>
+              <location-search />
+            </ClientOnly>
           </div>
         </div>
       </header>
