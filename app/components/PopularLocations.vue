@@ -1,18 +1,18 @@
 <template>
   <div class="popular-locations">
     <ul>
-      <li v-for="location in locations" :key="location.name + location.latitude + location.longitude" class="flex items-center justify-between py-1">
+      <li v-for="location in locations" :key="location.id" class="flex items-center justify-between py-1">
         <NuxtLink
-          :to="`/weather/${encodeURIComponent(location.name)}?lat=${location.latitude}&lon=${location.longitude}`"
+          :to="`/weather/${encodeURIComponent(location.name)}?lat=${location.lat}&lon=${location.lon}`"
           class="flex-1 hover:underline"
         >
-          {{ location.name }} ({{ location.latitude }}, {{ location.longitude }})
+          {{ location.name }} ({{ location.lat }}, {{ location.lon }})
           <span class="ml-2 text-xs text-gray-500">x{{ location.count }}</span>
         </NuxtLink>
         <button
           class="ml-2 btn btn-xs btn-soft btn-error"
           aria-label="Remove from popular locations"
-          @click.prevent="remove(location)"
+          @click.prevent="remove(location.id)"
         >
           <Icon name="uil:trash" />
         </button>
@@ -28,8 +28,8 @@ import { storeToRefs } from 'pinia'
 const locationsStore = useLocationsStore()
 const { locations } = storeToRefs(locationsStore)
 
-function remove(location: { name: string; latitude: number; longitude: number }) {
-  locationsStore.remove(location)
+function remove(id: number) {
+  locationsStore.remove(id)
 }
 </script>
 

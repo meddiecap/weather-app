@@ -11,7 +11,7 @@
 
         <ul v-if="showDropdown && (results.length || locations.length)" class="dropdown-list">
 
-            <li v-for="(result, idx) in results" :key="result.id || result.name + result.latitude + result.longitude"
+            <li v-for="(result, idx) in results" :key="result.id"
                 :class="{ highlighted: idx === highlighted }" @mousedown.prevent="selectResult(result)">
                 {{ result.name }}<span v-if="result.country">, {{ result.country }}</span>
             </li>
@@ -22,9 +22,9 @@
                     <li v-for="(location, idx) in locations" :key="location.id"
                         class="flex items-center justify-between "
                        >
-                        <div  @mousedown.prevent="selectResult(location)">{{ location.name }}<span v-if="location.country">, {{ location.country }}</span></div>
+                        <div @mousedown.prevent="selectResult(location)">{{ location.name }}<span v-if="location.country">, {{ location.country }}</span></div>
                         <button class="ml-2 btn btn-xs btn-soft btn-error" aria-label="Remove from popular locations"
-                            @click.prevent="locationsStore.remove(location)">
+                            @click.prevent="locationsStore.remove(location.id)">
                             <Icon name="uil:times" />
                         </button>
                     </li>
