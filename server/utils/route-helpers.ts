@@ -23,7 +23,10 @@ export function makeSearchKey(q: { name: string; language?: string; count?: numb
         q.language ? `language=${q.language}` : '',
         q.count ? `count=${q.count}` : '',
     ].filter(Boolean)
-    return `search::${parts.join('|')}`
+
+    const hash = createHash('sha256').update(parts.join('|')).digest('hex')
+
+    return `search::${hash}`
 }
 
 
