@@ -16,9 +16,10 @@ const localStorageMock: LocalStorageMock = {
     this.state[key] = item
   },
   getItem(key: string) {
-    return this.state.hasOwnProperty(key) ? this.state[key] : null
+    return Object.prototype.hasOwnProperty.call(this.state, key) ? this.state[key] : null
   },
   removeItem(key: string) {
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete this.state[key]
   },
   clear() {
