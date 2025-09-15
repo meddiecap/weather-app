@@ -5,6 +5,12 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
 
+  nitro: {
+    experimental: {
+      openAPI: true // Enable server API documentation in NuxtHub
+    }
+  },
+
   vite: {
     plugins: [
       tailwindcss(),
