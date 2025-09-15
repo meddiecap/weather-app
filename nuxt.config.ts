@@ -11,6 +11,10 @@ export default defineNuxtConfig({
     ],
   },
 
+  hub: {
+    database: true
+  },
+
   modules: [
     '@nuxt/eslint',
     '@pinia/nuxt',
@@ -18,7 +22,8 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     'pinia-plugin-persistedstate/nuxt',
     'nuxt-swiper',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxthub/core'
   ],
 
   typescript: {
