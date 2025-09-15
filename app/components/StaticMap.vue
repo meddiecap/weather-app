@@ -1,7 +1,7 @@
 
 <template>
   <div class="static-map">
-    <NuxtImg ref="mapImage" :src="imageUrl" @error="generateImage" class="w-full h-auto" :alt="`Map centered at ${lat}, ${lon}`" />
+    <NuxtImg ref="mapImage" :src="imageUrl" class="w-full h-auto" :alt="`Map centered at ${lat}, ${lon}`" @error="generateImage" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ const props = defineProps<{
 
 const mapImage = ref(null)
 
-let imageUrl = ref(`/maps/${props.lat}_${props.lon}_${props.zoom ?? 9}_${props.width ?? 600}x${props.height ?? 400}.png`)
+const imageUrl = ref(`/maps/${props.lat}_${props.lon}_${props.zoom ?? 9}_${props.width ?? 600}x${props.height ?? 400}.png`)
 
 const generateImage = () => {
     console.log('Regenerating map image')

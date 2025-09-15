@@ -17,7 +17,8 @@
 
       <Card no-padding>
         <template #content>
-          <static-map v-if="userLocationStore.location" 
+          <static-map 
+            v-if="userLocationStore.location" 
             :lat="userLocationStore.location.lat"
             :lon="userLocationStore.location.lon"
           />

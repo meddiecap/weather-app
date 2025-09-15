@@ -3,9 +3,6 @@ import { $fetch } from 'ofetch'
 import { join } from 'pathe'
 import { promises as fs } from 'fs'
 
-// Cache images for 1 week (in seconds)
-const CACHE_TTL = 60 * 60 * 24 * 7
-
 export default defineEventHandler(async (event) => {
     const query = getQuery(event)
     const lat = query.lat
@@ -43,6 +40,7 @@ export default defineEventHandler(async (event) => {
         await fs.writeFile(publicFile, image)
     } catch (e) {
         // Ignore write errors
+        console.error('Error writing map image:', e)
     }
 
     event.res.setHeader('Content-Type', 'image/png')

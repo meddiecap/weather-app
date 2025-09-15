@@ -2,7 +2,7 @@
 import Card from '~/components/ui/Card.vue';
 
 const route = useRoute()
-const { data, error } = await useFetch(`/api/location/${route.params['location']}`)
+const { data } = await useFetch(`/api/location/${route.params['location']}`)
 
 </script>
 

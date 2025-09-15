@@ -3,7 +3,8 @@
         <div class="input-wrapper">
             <Icon v-if="loading" name="uil:spinner" class="search-icon animate-spin" />
             <Icon v-else name="uil:search" class="search-icon" />
-            <input v-model="search" type="search" class="input input-bordered w-full pl-10"
+            <input 
+                v-model="search" type="search" class="input input-bordered w-full pl-10"
                 placeholder="Search a city or location..." @focus="showDropdown = true" @click="showDropdown = true"
                 @blur="onBlur" @keydown.down.prevent="moveSelection(1)" @keydown.up.prevent="moveSelection(-1)"
                 @keydown.enter.prevent="selectHighlighted">
@@ -11,7 +12,8 @@
 
         <ul v-if="showDropdown && (results.length || locations.length)" class="dropdown-list">
 
-            <li v-for="(result, idx) in results" :key="result.id"
+            <li 
+                v-for="(result, idx) in results" :key="result.id"
                 :class="{ highlighted: idx === highlighted }" @mousedown.prevent="selectResult(result)">
                 {{ result.name }}<span v-if="result.country">, {{ result.country }}</span>
             </li>
@@ -19,11 +21,13 @@
             <li v-if="locations.length && !results.length">
                 <div class="px-4 py-2 block border-b border-gray-200 text-gray-500">Saved Locations</div>
                 <ul>
-                    <li v-for="(location, idx) in locations" :key="location.id"
+                    <li 
+                        v-for="(location) in locations" :key="location.id"
                         class="flex items-center justify-between "
                        >
                         <div @mousedown.prevent="selectResult(location)">{{ location.name }}<span v-if="location.country">, {{ location.country }}</span></div>
-                        <button class="ml-2 btn btn-xs btn-soft btn-error" aria-label="Remove from popular locations"
+                        <button 
+                            class="ml-2 btn btn-xs btn-soft btn-error" aria-label="Remove from popular locations"
                             @click.prevent="locationsStore.remove(location.id)">
                             <Icon name="uil:times" />
                         </button>
