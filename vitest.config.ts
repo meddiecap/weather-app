@@ -6,6 +6,7 @@ export default defineConfig({
     projects: [
       {
         test: {
+          setupFiles: ['test/setup/global-mocks.ts'],
           name: 'unit',
           include: ['test/{e2e,unit}/*.{test,spec}.ts'],
           environment: 'node',

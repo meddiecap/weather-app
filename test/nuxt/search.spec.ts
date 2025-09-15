@@ -14,6 +14,7 @@ vi.stubGlobal('$fetch', vi.fn(async () => {
 await setup({
   server: true,
   browser: false,
+  dev: true,
 })
 
 describe('/api/search', () => {

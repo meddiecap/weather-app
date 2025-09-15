@@ -29,7 +29,7 @@ export const useWeatherStore = defineStore('weather', () => {
                     current: 'temperature_2m,is_day,weather_code,wind_speed_10m,wind_direction_10m,pressure_msl,cloud_cover,apparent_temperature,precipitation',
                     timezone: location.timezone || 'auto',
                 },
-            })
+            }) as unknown as Row
         } catch (e: unknown) {
             console.error('Error fetching weather for key:', key, e)
         }
