@@ -17,6 +17,12 @@ await setup({
   dev: true,
 })
 
+type ResFailed = {
+    statusCode: number
+    statusMessage?: string
+    message: string
+}
+
 describe('/api/search', () => {
   it('returns geocoding data for valid name', async () => {
     const res = await $fetch('/api/search', {
@@ -27,8 +33,8 @@ describe('/api/search', () => {
   })
 
   it('returns error for missing name', async () => {
-    await expect(
-      $fetch('/api/search', { query: {} })
-    ).rejects.toThrow(/name/)
+      const res = await $fetch<ResFailed>('/api/search', { query: {} })
+      expect(res.statusCode).toBe(400)
+      expect(res.message).toMatch(/name/)
   })
 })

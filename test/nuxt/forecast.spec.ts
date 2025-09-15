@@ -22,12 +22,19 @@ await setup({
 type Res = {
     hourly?: {
         time?: string[]
+        temperature_2m?: number[]
     }
+}
+
+type ResFailed = {
+    statusCode: number
+    statusMessage?: string
+    message: string
 }
 
 describe('/api/forecast', () => {
     it('returns forecast data for valid lat/lon', async () => {
-        const res = <Res> await $fetch('/api/forecast', {
+        const res = <Res>await $fetch('/api/forecast', {
             query: { lat: '52.52', lon: '13.405', hourly: 'temperature_2m' }
         })
         expect(res).toHaveProperty('hourly')
@@ -35,14 +42,14 @@ describe('/api/forecast', () => {
     })
 
     it('returns error for missing lat', async () => {
-        await expect(
-            $fetch('/api/forecast', { query: { lon: '13.405' } })
-        ).rejects.toThrow(/lat/)
+        const res = await $fetch<ResFailed>('/api/forecast', { query: { lon: '13.405' } })
+        expect(res.statusCode).toBe(400)
+        expect(res.message).toMatch(/lat/)
     })
 
     it('returns error for missing lon', async () => {
-        await expect(
-            $fetch('/api/forecast', { query: { lat: '52.52' } })
-        ).rejects.toThrow(/lon/)
+        const res = await $fetch<ResFailed>('/api/forecast', { query: { lat: '52.52' } })
+        expect(res.statusCode).toBe(400)
+        expect(res.message).toMatch(/lon/)
     })
 })
