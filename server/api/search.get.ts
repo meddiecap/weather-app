@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import { createError } from 'h3'
 import { makeSearchKey } from '../utils/route-helpers'
 import { geocodeHandler } from '../utils/geocodeHandler';
 
@@ -11,7 +12,7 @@ export default defineCachedEventHandler(async (event) => {
     } catch (err: unknown) {
         if (err instanceof Error) {
             // Parameter validation error
-            return createError({ statusCode: 400, statusMessage: err.message })
+            throw createError({ statusCode: 400, statusMessage: err.message })
         }
         throw err
     }
@@ -29,5 +30,5 @@ export default defineCachedEventHandler(async (event) => {
         })
     },
     staleMaxAge: 60,
-    swr: true
+    swr: true // enable stale-while-revalidate
 })
