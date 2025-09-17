@@ -14,6 +14,7 @@ export default defineCachedEventHandler(async (event) => {
 
     // Call your external service:
     const data = await ipLocationHandler(ip)
+    console.log("IP (" + ip + ") location data:", data)
     return data
 }, {
     maxAge: 60 * 60 * 24,  // seconds (24h)

@@ -18,5 +18,6 @@ export interface IpApiResponse {
 }
 
 export async function ipLocationHandler(ip: string): Promise<IpApiResponse> {
+  console.log("Fetching IP location for:", ip)
   return await $fetch<IpApiResponse>(`http://ip-api.com/json/${ip}`);
 }
