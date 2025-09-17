@@ -19,6 +19,7 @@ export const useWeatherStore = defineStore('weather', () => {
         const key = makeKey(location)
         if (data[key] !== undefined) return
         try {
+            console.log('Fetching weather data for location:', location)
             data[key] = await $fetch('/api/forecast', {
                 query: {
                     lat: Number(location.lat),
