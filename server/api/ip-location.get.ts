@@ -12,7 +12,6 @@ export default defineCachedEventHandler(async (event) => {
         ip = '8.8.8.8' // Use a public DNS server as a fallback
     }
 
-    console.log("Determined IP for geolocation:", ip)
     if (!ip) {
         ip = '8.8.8.8' // Fallback to a default IP
         console.warn("No IP address found, defaulting to:", ip)
@@ -20,7 +19,6 @@ export default defineCachedEventHandler(async (event) => {
 
     // Call your external service:
     const data = await ipLocationHandler(ip)
-    console.log("IP (" + ip + ") location data:", data)
     return data
 }, {
     maxAge: 60 * 60 * 24,  // seconds (24h)

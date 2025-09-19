@@ -19,8 +19,7 @@ export const useWeatherStore = defineStore('weather', () => {
         const key = makeKey(location)
         if (data[key] !== undefined) return
         try {
-            console.log('Fetching weather data for location:', location)
-            data[key] = await $fetch('/api/forecast', {
+            const { data: weatherData } = await useFetch('/api/forecast', {
                 query: {
                     lat: Number(location.lat),
                     lon: Number(location.lon),
@@ -31,6 +30,7 @@ export const useWeatherStore = defineStore('weather', () => {
                     timezone: location.timezone || 'auto',
                 },
             }) as unknown as Row
+            data[key] = (weatherData as { value?: unknown }).value as Row
         } catch (e: unknown) {
             console.error('Error fetching weather for key:', key, e)
         }
