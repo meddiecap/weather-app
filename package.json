@@ -12,7 +12,9 @@
     "typecheck": "vue-tsc --noEmit",
     "test:unit": "vitest run --reporter=verbose",
     "python:era5:test": "echo '{\"year\":\"2024\",\"month\":[\"06\"],\"day\":[\"01\",\"02\"]}' | py scripts/fetch_era5.py",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "export-geonames-data": "sqlite3 geonames.sqlite .dump | findstr /B INSERT > geonames_data.sql",
+    "import-geonames-d1": "npx wrangler d1 execute <DATABASE_NAME> --file geonames_data.sql"
   },
   "dependencies": {
     "@nuxt/eslint": "^1.8.0",
