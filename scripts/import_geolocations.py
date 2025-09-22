@@ -135,6 +135,7 @@ def import_file(conn, filepath):
             fcode = row[7]
             country = row[8]
             admin1 = row[10]
+            population = int(row[14]) if row[14].isdigit() else 0
             timezone = row[17]
             moddate = row[18]
 
@@ -150,11 +151,7 @@ def import_file(conn, filepath):
                 countries.append((
                     "country", geonameid, name, slug, country, timezone, created, updated
                 ))
-            elif fcode == "ADM1":  # Province
-                provinces.append((
-                    "province", geonameid, name, slug, country, timezone, created, updated
-                ))
-            elif fcode in ("PPL", "PPLA", "PPLC"):  # City
+            elif fcode in ("PPL", "PPLA", "PPLC") and population > 10000:  # City
                 cities.append((
                     "city", geonameid, name, slug, country, admin1, lat, lon, timezone, created, updated
                 ))
@@ -169,27 +166,17 @@ def import_file(conn, filepath):
         cur.execute("SELECT id, iso2 FROM geo_location_countries")
         country_lookup = {row[1]: row[0] for row in cur.fetchall()}
 
-    if provinces:
-        insert_batch(cur, provinces)
-        conn.commit()
-        line_count += len(provinces)
-        print(f"Imported {line_count} provinces...")
-
-        # Build (country_id, province_geonameid) -> province_id lookup
-        cur.execute("SELECT id, country_id, geonameid FROM geo_location_provinces")
-        province_lookup = {(row[1], str(row[2])): row[0] for row in cur.fetchall()}
-
     
     if cities:
         batch_size = 50000
         for i in range(0, len(cities), batch_size):
             batch = cities[i:i+batch_size]
-            insert_batch(cur, batch, country_lookup, province_lookup)
+            insert_batch(cur, batch, country_lookup)
             conn.commit()
             line_count += len(batch)
             print(f"Imported {line_count} cities...")
 
-def insert_batch(cur, batch, country_lookup = None, province_lookup = None):
+def insert_batch(cur, batch, country_lookup = None):
     """Insert a batch into the right tables."""
     for entry in batch:
         if entry[0] == "country":
@@ -200,29 +187,15 @@ def insert_batch(cur, batch, country_lookup = None, province_lookup = None):
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (geonameid, name, slug, iso2, tz, created, updated))
     
-
-        elif entry[0] == "province":
-            _, geonameid, name, slug, country, tz, created, updated = entry
-            # Lookup country_id
-            cur.execute("SELECT id FROM geo_location_countries WHERE iso2=?", (country,))
-            country_id = cur.fetchone()
-            country_id = country_id[0] if country_id else None
-            cur.execute("""
-                INSERT OR IGNORE INTO geo_location_provinces
-                (geonameid, country_id, name, slug, timezone, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (geonameid, country_id, name, slug, tz, created, updated))
-
         elif entry[0] == "city":
             _, geonameid, name, slug, country, admin1, lat, lon, tz, created, updated = entry
             country_id = country_lookup.get(country) if country_lookup else None
-            prov_id = province_lookup.get((country_id, admin1)) if province_lookup else None
 
             cur.execute("""
                 INSERT OR IGNORE INTO geo_location_cities
-                (geonameid, province_id, country_id, name, slug, latitude, longitude, timezone, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (geonameid, prov_id, country_id, name, slug, lat, lon, tz, created, updated))
+                (geonameid, country_id, name, slug, latitude, longitude, timezone, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (geonameid, country_id, name, slug, lat, lon, tz, created, updated))
 
 
 # ====== Main ======

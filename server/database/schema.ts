@@ -21,21 +21,9 @@ export interface GeoLocationCountry {
   updated_at: string;
 }
 
-export interface GeoLocationProvince {
-  id: number;
-  geonameid: number;
-  country_id: number;
-  name: string;
-  slug: string;
-  timezone: string;
-  created_at: string;
-  updated_at: string;
-}
-
 export interface GeoLocationCity {
   id: number;
   geonameid: number;
-  province_id: number;
   country_id: number;
   name: string;
   slug: string;
@@ -81,22 +69,9 @@ export const geoLocationCountries = sqliteTable('geo_location_countries', {
   updated_at: integer('updated_at').notNull(),
 })
 
-export const geoLocationProvinces = sqliteTable('geo_location_provinces', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
-  geonameid: integer('geonameid').notNull().unique(),
-  country_id: integer('country_id').notNull(),
-  name: text('name').notNull(),
-  slug: text('slug').notNull(),
-  timezone: text('timezone').notNull(),
-  created_at: integer('created_at').notNull(),
-  updated_at: integer('updated_at').notNull(),
-  countryId: integer('country_id').references(() => geoLocationCountries.id).notNull(),
-})
-
 export const geoLocationCities = sqliteTable('geo_location_cities', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   geonameid: integer('geonameid').notNull().unique(),
-  province_id: integer('province_id').notNull(),
   country_id: integer('country_id').notNull(),
   name: text('name').notNull(),
   slug: text('slug').notNull(),
@@ -105,6 +80,5 @@ export const geoLocationCities = sqliteTable('geo_location_cities', {
   timezone: text('timezone').notNull(),
   created_at: integer('created_at').notNull(),
   updated_at: integer('updated_at').notNull(),
-  provinceId: integer('province_id').references(() => geoLocationProvinces.id).notNull(),
   countryId: integer('country_id').references(() => geoLocationCountries.id).notNull(),
 })
