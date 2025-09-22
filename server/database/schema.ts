@@ -1,3 +1,5 @@
+import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core'
+
 // GeoNames location tables
 export interface GeoLocationContinent {
   id: number;
@@ -43,8 +45,6 @@ export interface GeoLocationCity {
   created_at: string;
   updated_at: string;
 }
-
-import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core'
 
 export const geoLocations = sqliteTable('geo_locations', {
   id: integer('id').primaryKey({ autoIncrement: true }),
