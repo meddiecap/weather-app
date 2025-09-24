@@ -1,0 +1,1 @@
+ALTER TABLE geo_location_countries ADD COLUMN neighbours TEXT;

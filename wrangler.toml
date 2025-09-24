@@ -1,0 +1,11 @@
+# Wrangler configuration for Cloudflare D1 (TOML format)
+# Rename this file to wrangler.toml for use with Wrangler CLI
+
+name = "weathertoday"
+main = "server/entry.js" # or your actual entry file if deploying a Worker
+compatibility_date = "2025-09-23"
+
+[[d1_databases]]
+binding = "DB" # Use this binding name in your Nuxt/Worker code
+database_name = "weathertoday" # Replace with your D1 database name
+database_id = "f751796f-5d86-4d68-a280-c5ba295d51b9" # Replace with your D1 database UUID
